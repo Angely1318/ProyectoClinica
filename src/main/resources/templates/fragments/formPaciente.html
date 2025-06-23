@@ -2,7 +2,10 @@
 <div th:fragment="contenido">
   <h4>Formulario Paciente</h4>
   
-  <form th:action="@{/pacientes/guardar}" th:object="${paciente}" method="post" class="row g-3">
+<form th:action="${modo == 'editar'} ? @{/save-edit-paciente} : @{/save-new-paciente}"
+      th:object="${paciente}" method="post" class="row g-3">
+      
+    <input type="hidden" th:field="*{id}">
 
     <div class="col-md-6">
       <label for="dni" class="form-label">DNI</label>
@@ -55,7 +58,7 @@
 
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Guardar Paciente</button>
-      <a th:href="@{/pacientes}" class="btn btn-secondary">Cancelar</a>
+      <a th:href="@{/list-paciente}" class="btn btn-secondary">Ver Lista</a>
     </div>
 
   </form>

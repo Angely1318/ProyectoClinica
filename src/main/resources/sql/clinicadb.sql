@@ -74,3 +74,50 @@ CREATE TABLE historial_clinico (
     FOREIGN KEY (paciente_id) REFERENCES paciente(id),
     FOREIGN KEY (medico_id) REFERENCES medico(id)
 );
+
+
+INSERT INTO usuario (username, password, rol, estado) VALUES
+('admin1', 'admin123', 'ADMIN', 'ACTIVO'),
+('recepcion1', 'recep456', 'RECEPCIONISTA', 'ACTIVO'),
+('drmaria', 'maria789', 'MEDICO', 'ACTIVO'),
+('drluis', 'luis321', 'MEDICO', 'INACTIVO'),
+('admin2', 'admin456', 'ADMIN', 'ACTIVO');
+
+INSERT INTO especialidad (nombre, descripcion) VALUES
+('Pediatría', 'Atención médica a niños y adolescentes.'),
+('Cardiología', 'Diagnóstico y tratamiento de enfermedades del corazón.'),
+('Dermatología', 'Cuidado de la piel y sus enfermedades.'),
+('Ginecología', 'Salud reproductiva femenina.'),
+('Medicina General', 'Atención médica general y derivación especializada.');
+
+
+INSERT INTO medico (dni, nombres, apellidos, cmp, telefono, correo, genero, horario_atencion, especialidad_id) VALUES
+('12345678', 'María', 'Gonzales Ríos', 'CMP12345', '987654321', 'maria@clinica.com', 'FEMENINO', 'Lun-Vie 8am-2pm', 1),
+('87654321', 'Luis', 'Pérez Ramírez', 'CMP23456', '998877665', 'luis@clinica.com', 'MASCULINO', 'Lun-Vie 2pm-8pm', 2),
+('11223344', 'Ana', 'Torres Díaz', 'CMP34567', '911122233', 'ana@clinica.com', 'FEMENINO', 'Mar-Jue 9am-3pm', 3),
+('33445566', 'Carlos', 'Rojas Mejía', 'CMP45678', '922334455', 'carlos@clinica.com', 'MASCULINO', 'Mié-Vie 10am-4pm', 4),
+('55667788', 'Lucía', 'Cano Salazar', 'CMP56789', '933445566', 'lucia@clinica.com', 'FEMENINO', 'Lun-Vie 1pm-7pm', 5);
+
+
+INSERT INTO paciente (dni, nombres, apellidos, genero, fecha_nacimiento, telefono, correo, direccion, pais) VALUES
+('99887766', 'Juan', 'Dueñas Peña', 'MASCULINO', '2014-05-12', '944556677', 'juan@mail.com', 'Av. Perú 123', 'Perú'),
+('88776655', 'Sofía', 'Martínez Flores', 'FEMENINO', '1990-11-03', '933112233', 'sofia@mail.com', 'Jr. Lima 456', 'Perú'),
+('77665544', 'Diego', 'Ramos Ortega', 'MASCULINO', '1985-07-20', '922334455', 'diego@mail.com', 'Calle Los Olivos 89', 'Chile'),
+('66554433', 'Camila', 'Herrera Soto', 'FEMENINO', '2002-02-15', '955667788', 'camila@mail.com', 'Av. Grau 789', 'Perú'),
+('55443322', 'José', 'Silva Luna', 'MASCULINO', '1978-09-25', '988776655', 'jose@mail.com', 'Jr. Junín 234', 'Bolivia');
+
+
+INSERT INTO cita (paciente_id, medico_id, fecha, hora, estado, motivo_consulta) VALUES
+(1, 1, '2025-06-24', '09:00', 'CONFIRMADA', 'Control de niño sano'),
+(2, 2, '2025-06-25', '15:30', 'SOLICITADA', 'Dolor en el pecho'),
+(3, 3, '2025-06-26', '11:00', 'CANCELADA', 'Alergia en la piel'),
+(4, 4, '2025-06-27', '13:00', 'ATENDIDA', 'Chequeo general'),
+(5, 5, '2025-06-28', '10:00', 'CONFIRMADA', 'Dolor de cabeza frecuente');
+
+
+INSERT INTO historial_clinico (paciente_id, medico_id, fecha, diagnostico, tratamiento, observaciones) VALUES
+(1, 1, '2025-06-24', 'Desnutrición leve', 'Suplementos y dieta', 'Revisar en 1 mes'),
+(2, 2, '2025-06-25', 'Angina de pecho', 'Reposo, nitroglicerina', 'Evaluación con cardiólogo'),
+(3, 3, '2025-06-26', 'Dermatitis atópica', 'Cremas y antihistamínicos', 'Evitar contacto con alérgenos'),
+(4, 4, '2025-06-27', 'Sin hallazgos', 'Control anual recomendado', 'Paciente sano'),
+(5, 5, '2025-06-28', 'Migraña crónica', 'Paracetamol + seguimiento', 'Revisión neurológica próxima cita');

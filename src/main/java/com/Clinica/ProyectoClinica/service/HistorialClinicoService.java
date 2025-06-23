@@ -43,4 +43,8 @@ public class HistorialClinicoService {
     public List<HistorialClinico> listarTodos() {
         return historialRepository.findAll();
     }
+    
+    public List<HistorialClinico> buscarPorPacienteOMedico(String filtro) {
+        return historialRepository.buscarPorPacienteOMedico(filtro);
+    }
 }

@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Listado Cita</title>
-</head>
-<body>
+<div th:fragment="contenido">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Citas</h4>
 
-</body>
-</html>
+    <form th:action="@{/list-cita}" method="get" class="d-flex">
+      <input type="text" name="filtro" th:value="${filtro}" class="form-control form-control-sm me-2" placeholder="Buscar por paciente o médico">
+      <button type="submit" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <a th:href="@{/new-cita}" class="btn btn-primary mb-3">Registrar Nueva Cita</a>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Estado</th>
+          <th>Motivo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="c : ${listaCitas}">
+          <td th:text="${c.id}"></td>
+          <td th:text="${c.paciente.nombres + ' ' + c.paciente.apellidos}"></td>
+          <td th:text="${c.medico.nombres + ' ' + c.medico.apellidos}"></td>
+          <td th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"></td>
+          <td th:text="${c.hora}"></td>
+          <td th:text="${c.estado}"></td>
+          <td th:text="${c.motivoConsulta}"></td>
+          <td class="text-center">
+            <a th:href="@{'/edit-cita/' + ${c.id}}" class="btn btn-sm btn-warning">Editar</a>
+            <a th:href="@{'/view-cita/' + ${c.id}}" class="btn btn-sm btn-info text-white">Ver</a>
+            <a th:href="@{'/remove-cita/' + ${c.id}}" class="btn btn-sm btn-danger"
+               onclick="return confirm('¿Estás seguro de eliminar esta cita?')">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

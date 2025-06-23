@@ -1,4 +1,3 @@
-<!-- templates/layout.html -->
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,48 +6,91 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
+  * {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden; /* evita scroll horizontal */
+}
+  
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #f8f9fa; /* fondo claro para el contenido */
+    }
+
+    .main-wrapper {
+      min-height: 100vh;
+      display: flex;
+    }
+
     .sidebar {
-      height: 100vh;
+      width: 250px;
       background-color: #003366;
       color: white;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
     }
+
     .sidebar a {
       color: white;
       text-decoration: none;
-      display: block;
       padding: 15px;
     }
+
     .sidebar a:hover {
       background-color: #005599;
+    }
+
+    .content-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 2rem 3rem;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+    }
+
+    .content-box {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 2rem;
     }
   </style>
 </head>
 <body>
-  <div class="row g-0">
+
+  <div class="main-wrapper">
     <!-- Menú lateral -->
-    <div class="col-md-2 sidebar">
-      <a th:href="@{/}" class="p-3 text-center d-block text-white text-decoration-none">
- 			 <h4>Clínica VidaSalud</h4>
-	  </a>
+    <div class="sidebar">
+      <a th:href="@{/}" class="text-center">
+        <h4 class="py-3">Clínica VidaSalud</h4>
+      </a>
       <a th:href="@{/new-paciente}"><i class="bi bi-person-circle me-2"></i>Pacientes</a>
       <a th:href="@{/new-medico}"><i class="bi bi-person-video3 me-2"></i>Médicos</a>
-      <a th:href="@{/new-cita}"><i class="bi bi-calendar-check icon-left"></i>Agendar Citas</a>
-      <a th:href="@{/new-historialClinico}"><i class="bi bi-flask icon-left"></i>Historial Clínico</a>
-      <a th:href="@{/new-reporte}"><i class="bi bi-gear icon-left"></i>Reportes</a>
+      <a th:href="@{/new-cita}"><i class="bi bi-calendar-check me-2"></i>Agendar Citas</a>
+      <a th:href="@{/new-historialClinico}"><i class="bi bi-flask me-2"></i>Historial Clínico</a>
+      <a th:href="@{/new-reporte}"><i class="bi bi-gear me-2"></i>Reportes</a>
     </div>
 
-    <!-- Contenido que cambia -->
-<div class="col-md-10 bg-light">
-  <nav class="navbar navbar-dark bg-primary px-4">
-    <span class="navbar-brand">Panel Administrativo</span>
-  </nav>
+    <!-- Área de contenido -->
+    <div class="content-area">
+      <nav class="navbar navbar-dark bg-primary px-4">
+        <span class="navbar-brand">Panel Administrativo</span>
+      </nav>
 
-  <!-- Ajustes para separar del borde izquierdo y derecho -->
-  <div class="px-5 py-5">
-    <div class="bg-white rounded shadow-sm p-4" th:replace="__${contenido}__"></div>
+      <div class="main-content">
+        <div class="content-box" th:replace="__${contenido}__"></div>
+      </div>
+    </div>
   </div>
-</div>
 
-  </div>
 </body>
 </html>

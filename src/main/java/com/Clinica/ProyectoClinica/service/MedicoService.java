@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Clinica.ProyectoClinica.entity.Medico;
+import com.Clinica.ProyectoClinica.entity.Paciente;
 import com.Clinica.ProyectoClinica.repository.MedicoRepository;
 
 @Service
@@ -46,4 +47,10 @@ public class MedicoService {
     public List<Medico> listarTodos() {
         return medicoRepository.findAll();
     }
+    
+    public List<Medico> buscarPorNombreODni(String filtro) {
+        return medicoRepository.findByDniContainingIgnoreCaseOrNombresContainingIgnoreCase(filtro, filtro);
+    }
+    
+    
 }

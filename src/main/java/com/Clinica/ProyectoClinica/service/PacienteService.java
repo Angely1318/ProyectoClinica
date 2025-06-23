@@ -46,4 +46,9 @@ public class PacienteService {
     public List<Paciente> listarTodos() {
         return pacienteRepository.findAll();
     }
+    
+    public List<Paciente> buscarPorNombreODni(String filtro) {
+        return pacienteRepository.findByDniContainingIgnoreCaseOrNombresContainingIgnoreCase(filtro, filtro);
+    }
+
 }

@@ -44,4 +44,9 @@ public class CitaService {
     public List<Cita> listarTodos() {
         return citaRepository.findAll();
     }
+    
+    public List<Cita> buscarPorPacienteOMedico(String filtro) {
+        return citaRepository.buscarPorPacienteOMedico(filtro);
+    }
+
 }

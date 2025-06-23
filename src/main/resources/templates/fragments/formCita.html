@@ -1,20 +1,22 @@
-<!-- templates/formCita.html -->
 <div th:fragment="contenido">
-  <h4>Registrar Cita</h4>
+  <h4>Formulario de Cita</h4>
 
-  <form th:action="@{/citas/guardar}" th:object="${cita}" method="post" class="row g-3">
+  <form th:action="${modo == 'editar'} ? @{/save-edit-cita} : @{/save-new-cita}"
+        th:object="${cita}" method="post" class="row g-3">
+
+    <input type="hidden" th:field="*{id}">
 
     <div class="col-md-6">
       <label class="form-label">Paciente</label>
       <select th:field="*{paciente}" class="form-select" required>
-        <option th:each="pac : ${pacientes}" th:value="${pac.id}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
+        <option th:each="pac : ${listaPacientes}" th:value="${pac}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
       </select>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Médico</label>
       <select th:field="*{medico}" class="form-select" required>
-        <option th:each="med : ${medicos}" th:value="${med.id}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
+        <option th:each="med : ${listaMedicos}" th:value="${med}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
       </select>
     </div>
 
@@ -25,12 +27,12 @@
 
     <div class="col-md-6">
       <label class="form-label">Hora</label>
-      <input type="text" th:field="*{hora}" class="form-control" required>
+      <input type="time" th:field="*{hora}" class="form-control" required>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Estado</label>
-      <select th:field="*{estado}" class="form-select" required>
+      <select th:field="*{estado}" class="form-select">
         <option th:value="SOLICITADA">Solicitada</option>
         <option th:value="CONFIRMADA">Confirmada</option>
         <option th:value="ATENDIDA">Atendida</option>
@@ -38,14 +40,14 @@
       </select>
     </div>
 
-    <div class="col-md-12">
-      <label class="form-label">Motivo de Consulta</label>
+    <div class="col-12">
+      <label class="form-label">Motivo de la Consulta</label>
       <textarea th:field="*{motivoConsulta}" class="form-control" rows="3" required></textarea>
     </div>
 
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Guardar Cita</button>
-      <a th:href="@{/citas}" class="btn btn-secondary">Cancelar</a>
+      <a th:href="@{/list-cita}" class="btn btn-secondary">Ver Lista</a>
     </div>
 
   </form>
