@@ -1,11 +1,12 @@
 package com.Clinica.ProyectoClinica.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Cita {
+public class HistorialClinico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,35 +22,30 @@ public class Cita {
 
     private LocalDate fecha;
 
-    @Column(length = 10, nullable = false)
-    private String hora;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 15)
-    private Estado estado = Estado.SOLICITADA;
+    @Column(columnDefinition = "TEXT")
+    private String diagnostico;
 
     @Column(columnDefinition = "TEXT")
-    private String motivoConsulta;
+    private String tratamiento;
 
-    public enum Estado {
-        SOLICITADA, CONFIRMADA, ATENDIDA, CANCELADA
-    }
+    @Column(columnDefinition = "TEXT")
+    private String observaciones;
 
-	public Cita() {
+	public HistorialClinico() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cita(Integer id, Paciente paciente, Medico medico, LocalDate fecha, String hora, Estado estado,
-			String motivoConsulta) {
+	public HistorialClinico(Integer id, Paciente paciente, Medico medico, LocalDate fecha, String diagnostico,
+			String tratamiento, String observaciones) {
 		super();
 		this.id = id;
 		this.paciente = paciente;
 		this.medico = medico;
 		this.fecha = fecha;
-		this.hora = hora;
-		this.estado = estado;
-		this.motivoConsulta = motivoConsulta;
+		this.diagnostico = diagnostico;
+		this.tratamiento = tratamiento;
+		this.observaciones = observaciones;
 	}
 
 	public Integer getId() {
@@ -84,33 +80,33 @@ public class Cita {
 		this.fecha = fecha;
 	}
 
-	public String getHora() {
-		return hora;
+	public String getDiagnostico() {
+		return diagnostico;
 	}
 
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setDiagnostico(String diagnostico) {
+		this.diagnostico = diagnostico;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public String getTratamiento() {
+		return tratamiento;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setTratamiento(String tratamiento) {
+		this.tratamiento = tratamiento;
 	}
 
-	public String getMotivoConsulta() {
-		return motivoConsulta;
+	public String getObservaciones() {
+		return observaciones;
 	}
 
-	public void setMotivoConsulta(String motivoConsulta) {
-		this.motivoConsulta = motivoConsulta;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(estado, fecha, hora, id, medico, motivoConsulta, paciente);
+		return Objects.hash(diagnostico, fecha, id, medico, observaciones, paciente, tratamiento);
 	}
 
 	@Override
@@ -121,12 +117,12 @@ public class Cita {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cita other = (Cita) obj;
-		return estado == other.estado && Objects.equals(fecha, other.fecha) && Objects.equals(hora, other.hora)
+		HistorialClinico other = (HistorialClinico) obj;
+		return Objects.equals(diagnostico, other.diagnostico) && Objects.equals(fecha, other.fecha)
 				&& Objects.equals(id, other.id) && Objects.equals(medico, other.medico)
-				&& Objects.equals(motivoConsulta, other.motivoConsulta) && Objects.equals(paciente, other.paciente);
+				&& Objects.equals(observaciones, other.observaciones) && Objects.equals(paciente, other.paciente)
+				&& Objects.equals(tratamiento, other.tratamiento);
 	}
-    
     
     
 }

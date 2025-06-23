@@ -1,0 +1,47 @@
+<!-- templates/formHistorial.html -->
+<div th:fragment="contenido">
+  <h4>Registrar Historial Clínico</h4>
+
+  <form th:action="@{/historiales/guardar}" th:object="${historial}" method="post" class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label">Paciente</label>
+      <select th:field="*{paciente}" class="form-select" required>
+        <option th:each="pac : ${pacientes}" th:value="${pac.id}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Médico</label>
+      <select th:field="*{medico}" class="form-select" required>
+        <option th:each="med : ${medicos}" th:value="${med.id}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Fecha</label>
+      <input type="date" th:field="*{fecha}" class="form-control" required>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Diagnóstico</label>
+      <textarea th:field="*{diagnostico}" class="form-control" rows="2" required></textarea>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Tratamiento</label>
+      <textarea th:field="*{tratamiento}" class="form-control" rows="2" required></textarea>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Observaciones</label>
+      <textarea th:field="*{observaciones}" class="form-control" rows="2"></textarea>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Guardar Historial</button>
+      <a th:href="@{/historiales}" class="btn btn-secondary">Cancelar</a>
+    </div>
+
+  </form>
+</div>

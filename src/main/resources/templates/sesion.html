@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      margin-top: 50px;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    p {
+      text-align: center;
+      color: #444;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 2px;
+      font-size: 14px;
+    }
+
+    .btn {
+      background-color: #6EC1E4;
+      color: white;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      font-size: 14px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #58aad0;
+    }
+
+    .small-text {
+      font-size: 13px;
+      display: block;
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    .checkbox {
+      margin: 10px 0;
+      font-size: 12px;
+    }
+
+    .link {
+      color: #2978b5;
+      text-decoration: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function mostrarRegistro() {
+      document.getElementById('formLogin').classList.add('hidden');
+      document.getElementById('formRegistro').classList.remove('hidden');
+    }
+
+    function mostrarLogin() {
+      document.getElementById('formRegistro').classList.add('hidden');
+      document.getElementById('formLogin').classList.remove('hidden');
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <!-- FORMULARIO LOGIN -->
+  <div id="formLogin">
+    <h2>INICIAR SESIÓN</h2>
+    <p>Por favor introduzca su email y contraseña:</p>
+    <form th:action="@{/login}" method="post">
+      <input type="text" name="username" placeholder="Correo electrónico" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <span class="small-text"><a href="#" class="link">¿Olvidó su contraseña?</a></span>
+      <input type="hidden" name="registroActivo" value="false" />
+      <button type="submit" class="btn">Iniciar sesión</button>
+    </form>
+    <p>¿No tiene una cuenta? <a href="#" class="link" onclick="mostrarRegistro()">Crear cuenta</a></p>
+  </div>
+
+  <!-- FORMULARIO REGISTRO -->
+  <div id="formRegistro" class="hidden">
+    <h2>REGISTRAR</h2>
+    <p>Por favor complete la siguiente información:</p>
+    <form th:action="@{/login}" method="post">
+      <input type="text" name="nombre" placeholder="Nombre" required />
+      <input type="text" name="apellido" placeholder="Apellidos" required />
+      <input type="text" name="username" placeholder="Correo electrónico" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <input type="text" name="rol" value="Paciente" hidden />
+      <input type="hidden" name="registroActivo" value="true" />
+
+      <div class="checkbox">
+        <input type="checkbox" required /> He leído y acepto las
+        <a href="#" class="link">Políticas de Protección de Datos Personales</a>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" /> Acepto el envío de promociones y las
+        <a href="#" class="link">Políticas de Protección de Datos</a>
+      </div>
+
+      <button type="submit" class="btn">Crear una cuenta</button>
+    </form>
+    <p>¿Ya tiene una cuenta? <a href="#" class="link" onclick="mostrarLogin()">Iniciar sesión</a></p>
+  </div>
+</div>
+
+</body>
+</html>
