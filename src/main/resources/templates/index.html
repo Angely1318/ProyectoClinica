@@ -6,14 +6,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-  * {
-  box-sizing: border-box;
-}
 
-body {
-  overflow-x: hidden; /* evita scroll horizontal */
-}
-  
     html, body {
       height: 100%;
       margin: 0;
@@ -76,7 +69,7 @@ body {
       <a th:href="@{/new-paciente}"><i class="bi bi-person-circle me-2"></i>Pacientes</a>
       <a th:href="@{/new-medico}"><i class="bi bi-person-video3 me-2"></i>Médicos</a>
       <a th:href="@{/new-cita}"><i class="bi bi-calendar-check me-2"></i>Agendar Citas</a>
-      <a th:href="@{/new-historialClinico}"><i class="bi bi-flask me-2"></i>Historial Clínico</a>
+      <a th:href="@{/list-historial}"><i class="bi bi-flask me-2"></i>Historial Clínico</a>
       <a th:href="@{/new-reporte}"><i class="bi bi-gear me-2"></i>Reportes</a>
     </div>
 

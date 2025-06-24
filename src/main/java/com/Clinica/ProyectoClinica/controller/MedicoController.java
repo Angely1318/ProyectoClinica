@@ -86,6 +86,8 @@ public class MedicoController {
     @PostMapping("/save-new-medico")
     public String guardarNuevo(@ModelAttribute Medico medico, RedirectAttributes attrs) {
         try {
+        	Especialidad especialidad = especialidadService.buscarPorId(medico.getEspecialidad().getId());
+        	medico.setEspecialidad(especialidad);
             medicoService.crear(medico);
             attrs.addFlashAttribute("msgExito", "Médico registrado exitosamente.");
         } catch (Exception e) {

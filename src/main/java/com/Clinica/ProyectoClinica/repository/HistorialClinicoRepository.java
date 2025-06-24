@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.Clinica.ProyectoClinica.entity.Cita;
 import com.Clinica.ProyectoClinica.entity.HistorialClinico;
 
 public interface HistorialClinicoRepository extends JpaRepository<HistorialClinico, Integer> {
@@ -18,4 +20,7 @@ public interface HistorialClinicoRepository extends JpaRepository<HistorialClini
            "   OR LOWER(m.nombres) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
            "   OR LOWER(m.apellidos) LIKE LOWER(CONCAT('%', :filtro, '%'))")
     List<HistorialClinico> buscarPorPacienteOMedico(@Param("filtro") String filtro);
+    
+    boolean existsByCita(Cita cita);
+
 }

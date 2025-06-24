@@ -18,6 +18,9 @@ public class Cita {
     @ManyToOne(optional = false)
     @JoinColumn(name = "medico_id")
     private Medico medico;
+    
+    @OneToOne(mappedBy = "cita")
+    private HistorialClinico historial;
 
     private LocalDate fecha;
 
@@ -40,12 +43,13 @@ public class Cita {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cita(Integer id, Paciente paciente, Medico medico, LocalDate fecha, String hora, Estado estado,
-			String motivoConsulta) {
+	public Cita(Integer id, Paciente paciente, Medico medico, HistorialClinico historial, LocalDate fecha, String hora,
+			Estado estado, String motivoConsulta) {
 		super();
 		this.id = id;
 		this.paciente = paciente;
 		this.medico = medico;
+		this.historial = historial;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.estado = estado;
@@ -74,6 +78,14 @@ public class Cita {
 
 	public void setMedico(Medico medico) {
 		this.medico = medico;
+	}
+
+	public HistorialClinico getHistorial() {
+		return historial;
+	}
+
+	public void setHistorial(HistorialClinico historial) {
+		this.historial = historial;
 	}
 
 	public LocalDate getFecha() {
@@ -110,7 +122,7 @@ public class Cita {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(estado, fecha, hora, id, medico, motivoConsulta, paciente);
+		return Objects.hash(estado, fecha, historial, hora, id, medico, motivoConsulta, paciente);
 	}
 
 	@Override
@@ -122,10 +134,13 @@ public class Cita {
 		if (getClass() != obj.getClass())
 			return false;
 		Cita other = (Cita) obj;
-		return estado == other.estado && Objects.equals(fecha, other.fecha) && Objects.equals(hora, other.hora)
+		return estado == other.estado && Objects.equals(fecha, other.fecha)
+				&& Objects.equals(historial, other.historial) && Objects.equals(hora, other.hora)
 				&& Objects.equals(id, other.id) && Objects.equals(medico, other.medico)
 				&& Objects.equals(motivoConsulta, other.motivoConsulta) && Objects.equals(paciente, other.paciente);
 	}
+
+	
     
     
     

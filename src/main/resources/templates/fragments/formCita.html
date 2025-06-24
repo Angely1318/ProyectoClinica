@@ -9,14 +9,14 @@
     <div class="col-md-6">
       <label class="form-label">Paciente</label>
       <select th:field="*{paciente}" class="form-select" required>
-        <option th:each="pac : ${listaPacientes}" th:value="${pac}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
+        <option th:each="pac : ${listaPacientes}" th:value="${pac.id}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
       </select>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Médico</label>
       <select th:field="*{medico}" class="form-select" required>
-        <option th:each="med : ${listaMedicos}" th:value="${med}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
+        <option th:each="med : ${listaMedicos}" th:value="${med.id}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
       </select>
     </div>
 

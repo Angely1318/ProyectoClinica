@@ -10,9 +10,12 @@
       </button>
     </form>
   </div>
-
-  <a th:href="@{/new-historial}" class="btn btn-primary mb-3">Registrar Nuevo Historial</a>
-
+  
+  <a href="/reporte/historial" class="btn btn-danger" target="_blank">
+    Generar Reporte PDF
+</a>
+  
+<br>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead class="table-primary text-center">
@@ -39,8 +42,6 @@
           <td class="text-center">
             <a th:href="@{'/edit-historial/' + ${his.id}}" class="btn btn-sm btn-warning">Editar</a>
             <a th:href="@{'/view-historial/' + ${his.id}}" class="btn btn-sm btn-info text-white">Ver</a>
-            <a th:href="@{'/remove-historial/' + ${his.id}}" class="btn btn-sm btn-danger"
-               onclick="return confirm('¿Estás seguro de eliminar este historial?')">Eliminar</a>
           </td>
         </tr>
       </tbody>

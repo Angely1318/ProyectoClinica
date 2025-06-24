@@ -19,6 +19,10 @@ public class HistorialClinico {
     @ManyToOne(optional = false)
     @JoinColumn(name = "medico_id")
     private Medico medico;
+    
+    @OneToOne
+    @JoinColumn(name = "cita_id", nullable = false)
+    private Cita cita;
 
     private LocalDate fecha;
 
@@ -36,12 +40,13 @@ public class HistorialClinico {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HistorialClinico(Integer id, Paciente paciente, Medico medico, LocalDate fecha, String diagnostico,
-			String tratamiento, String observaciones) {
+	public HistorialClinico(Integer id, Paciente paciente, Medico medico, Cita cita, LocalDate fecha,
+			String diagnostico, String tratamiento, String observaciones) {
 		super();
 		this.id = id;
 		this.paciente = paciente;
 		this.medico = medico;
+		this.cita = cita;
 		this.fecha = fecha;
 		this.diagnostico = diagnostico;
 		this.tratamiento = tratamiento;
@@ -70,6 +75,14 @@ public class HistorialClinico {
 
 	public void setMedico(Medico medico) {
 		this.medico = medico;
+	}
+
+	public Cita getCita() {
+		return cita;
+	}
+
+	public void setCita(Cita cita) {
+		this.cita = cita;
 	}
 
 	public LocalDate getFecha() {
@@ -106,7 +119,7 @@ public class HistorialClinico {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(diagnostico, fecha, id, medico, observaciones, paciente, tratamiento);
+		return Objects.hash(cita, diagnostico, fecha, id, medico, observaciones, paciente, tratamiento);
 	}
 
 	@Override
@@ -118,11 +131,13 @@ public class HistorialClinico {
 		if (getClass() != obj.getClass())
 			return false;
 		HistorialClinico other = (HistorialClinico) obj;
-		return Objects.equals(diagnostico, other.diagnostico) && Objects.equals(fecha, other.fecha)
-				&& Objects.equals(id, other.id) && Objects.equals(medico, other.medico)
-				&& Objects.equals(observaciones, other.observaciones) && Objects.equals(paciente, other.paciente)
-				&& Objects.equals(tratamiento, other.tratamiento);
+		return Objects.equals(cita, other.cita) && Objects.equals(diagnostico, other.diagnostico)
+				&& Objects.equals(fecha, other.fecha) && Objects.equals(id, other.id)
+				&& Objects.equals(medico, other.medico) && Objects.equals(observaciones, other.observaciones)
+				&& Objects.equals(paciente, other.paciente) && Objects.equals(tratamiento, other.tratamiento);
 	}
+
+	
     
     
 }

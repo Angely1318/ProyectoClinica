@@ -48,5 +48,18 @@ public class CitaService {
     public List<Cita> buscarPorPacienteOMedico(String filtro) {
         return citaRepository.buscarPorPacienteOMedico(filtro);
     }
+    
+    public void marcarComoAtendida(Integer id) throws Exception {
+        Cita cita = buscarPorId(id);
+        cita.setEstado(Cita.Estado.ATENDIDA);
+        citaRepository.save(cita);
+    }
+
+    public void cancelarCita(Integer id) throws Exception {
+        Cita cita = buscarPorId(id);
+        cita.setEstado(Cita.Estado.CANCELADA);
+        citaRepository.save(cita);
+    }
+
 
 }

@@ -1,27 +1,26 @@
 <div th:fragment="contenido">
-  <h4>Formulario de Historial Clínico</h4>
+  <h4>Registrar Historial Clínico</h4>
 
-  <form th:action="${modo == 'editar'} ? @{/save-edit-historial} : @{/save-new-historial}"
+  <form th:action="@{/guardar-historial}"
         th:object="${historial}" method="post" class="row g-3">
 
     <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{cita.id}"> <!-- Importante: vincular con la cita -->
 
     <div class="col-md-6">
       <label class="form-label">Paciente</label>
-      <select th:field="*{paciente}" class="form-select" required>
-        <option th:each="pac : ${listaPacientes}" th:value="${pac}" th:text="${pac.nombres + ' ' + pac.apellidos}"></option>
-      </select>
+      <input type="text" class="form-control" th:value="${historial.cita.paciente.nombres + ' ' + historial.cita.paciente.apellidos}" disabled>
+      <input type="hidden" th:field="*{paciente.id}"> <!-- para enviar el id -->
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Médico</label>
-      <select th:field="*{medico}" class="form-select" required>
-        <option th:each="med : ${listaMedicos}" th:value="${med}" th:text="${med.nombres + ' ' + med.apellidos}"></option>
-      </select>
+      <input type="text" class="form-control" th:value="${historial.cita.medico.nombres + ' ' + historial.cita.medico.apellidos}" disabled>
+      <input type="hidden" th:field="*{medico.id}">
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Fecha</label>
+      <label class="form-label">Fecha de Atención</label>
       <input type="date" th:field="*{fecha}" class="form-control" required>
     </div>
 

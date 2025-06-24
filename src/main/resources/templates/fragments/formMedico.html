@@ -53,7 +53,7 @@
     <div class="col-md-6">
       <label class="form-label">Especialidad</label>
       <select th:field="*{especialidad}" class="form-select" required>
-        <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp.nombre}"></option>
+        <option th:each="esp : ${listaEspecialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
       </select>
     </div>
 

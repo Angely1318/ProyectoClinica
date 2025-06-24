@@ -1,9 +1,10 @@
 package com.Clinica.ProyectoClinica.controller;
 
+import com.Clinica.ProyectoClinica.entity.Cita;
+import com.Clinica.ProyectoClinica.entity.Cita.Estado;
 import com.Clinica.ProyectoClinica.entity.HistorialClinico;
+import com.Clinica.ProyectoClinica.service.CitaService;
 import com.Clinica.ProyectoClinica.service.HistorialClinicoService;
-import com.Clinica.ProyectoClinica.service.MedicoService;
-import com.Clinica.ProyectoClinica.service.PacienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,25 +21,57 @@ public class HistorialClinicoController {
     private HistorialClinicoService historialService;
 
     @Autowired
-    private PacienteService pacienteService;
+    private CitaService citaService;
 
-    @Autowired
-    private MedicoService medicoService;
+    // Formulario de nuevo historial desde una cita ATENDIDA
+    @GetMapping("/registrar-historial/{idCita}")
+    public String registrarHistorial(@PathVariable Integer idCita, Model model, RedirectAttributes attrs) {
+        try {
+            Cita cita = citaService.buscarPorId(idCita);
 
-    @GetMapping("/new-historialClinico")
-    public String nuevoHistorial(Model model) {
-        model.addAttribute("historial", new HistorialClinico());
-        model.addAttribute("listaPacientes", pacienteService.listarTodos());
-        model.addAttribute("listaMedicos", medicoService.listarTodos());
-        model.addAttribute("contenido", "fragments/formHistorialClinico :: contenido");
-        return "index";
+            if (cita.getEstado() != Estado.ATENDIDA) {
+                attrs.addFlashAttribute("msgError", "La cita aún no ha sido atendida.");
+                return "redirect:/list-cita";
+            }
+
+            if (historialService.existePorCita(cita)) {
+                attrs.addFlashAttribute("msgError", "Ya se registró un historial para esta cita.");
+                return "redirect:/list-cita";
+            }
+
+            HistorialClinico historial = new HistorialClinico();
+            historial.setCita(cita); // Asociamos la cita
+
+            model.addAttribute("historial", historial);
+            model.addAttribute("contenido", "fragments/formHistorialClinico :: contenido");
+            return "index";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            attrs.addFlashAttribute("msgError", "Error al cargar la cita.");
+            return "redirect:/list-cita";
+        }
     }
 
+    // Guardar historial clínico desde formulario
+    @PostMapping("/guardar-historial")
+    public String guardarHistorial(@ModelAttribute HistorialClinico historial, RedirectAttributes attrs) {
+        try {
+            historialService.guardar(historial);
+            attrs.addFlashAttribute("msgExito", "Historial clínico registrado exitosamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            attrs.addFlashAttribute("msgError", e.getMessage());
+        }
+        return "redirect:/list-cita";
+    }
+
+    // Lista de historiales con filtro
     @GetMapping("/list-historial")
     public String listarHistorial(@RequestParam(value = "filtro", required = false) String filtro, Model model) {
-        List<HistorialClinico> lista = (filtro != null && !filtro.isEmpty()) ?
-                historialService.buscarPorPacienteOMedico(filtro) :
-                historialService.listarTodos();
+        List<HistorialClinico> lista = (filtro != null && !filtro.isEmpty())
+                ? historialService.buscarPorPacienteOMedico(filtro)
+                : historialService.listarTodos();
 
         model.addAttribute("listaHistoriales", lista);
         model.addAttribute("filtro", filtro);
@@ -46,36 +79,37 @@ public class HistorialClinicoController {
         return "index";
     }
 
+    // Editar historial
     @GetMapping("/edit-historial/{id}")
     public String editar(@PathVariable Integer id, Model model) {
         try {
-        	HistorialClinico historial = historialService.buscarPorId(id);
+            HistorialClinico historial = historialService.buscarPorId(id);
             model.addAttribute("historial", historial);
-            model.addAttribute("listaPacientes", pacienteService.listarTodos());
-            model.addAttribute("listaMedicos", medicoService.listarTodos());
             model.addAttribute("modo", "editar");
-            model.addAttribute("contenido", "fragments/formHistorial :: contenido");
+            model.addAttribute("contenido", "fragments/formHistorialClinico :: contenido");
             return "index";
-		} catch (Exception e) {
-			// TODO: handle exception
-			return "error";
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 
+    // Ver historial
     @GetMapping("/view-historial/{id}")
     public String ver(@PathVariable Integer id, Model model) {
         try {
-        	HistorialClinico historial = historialService.buscarPorId(id);
+            HistorialClinico historial = historialService.buscarPorId(id);
             model.addAttribute("historial", historial);
             model.addAttribute("modo", "ver");
-            model.addAttribute("contenido", "fragments/formHistorial :: contenido");
+            model.addAttribute("contenido", "fragments/formHistorialClinico :: contenido");
             return "index";
-		} catch (Exception e) {
-			// TODO: handle exception
-			return "error";
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 
+    // Eliminar historial
     @GetMapping("/remove-historial/{id}")
     public String eliminar(@PathVariable Integer id, RedirectAttributes attrs) {
         try {
@@ -88,18 +122,7 @@ public class HistorialClinicoController {
         return "redirect:/list-historial";
     }
 
-    @PostMapping("/save-new-historial")
-    public String guardarNuevo(@ModelAttribute HistorialClinico historial, RedirectAttributes attrs) {
-        try {
-            historialService.crear(historial);
-            attrs.addFlashAttribute("msgExito", "Historial registrado exitosamente.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            attrs.addFlashAttribute("msgError", "Error al registrar historial.");
-        }
-        return "redirect:/list-historial";
-    }
-
+    // Guardar edición del historial
     @PostMapping("/save-edit-historial")
     public String guardarEdicion(@ModelAttribute HistorialClinico historial, RedirectAttributes attrs) {
         try {

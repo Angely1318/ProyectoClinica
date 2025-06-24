@@ -1,6 +1,8 @@
 package com.Clinica.ProyectoClinica.controller;
 
 import com.Clinica.ProyectoClinica.entity.Cita;
+import com.Clinica.ProyectoClinica.entity.Medico;
+import com.Clinica.ProyectoClinica.entity.Paciente;
 import com.Clinica.ProyectoClinica.service.CitaService;
 import com.Clinica.ProyectoClinica.service.MedicoService;
 import com.Clinica.ProyectoClinica.service.PacienteService;
@@ -97,7 +99,13 @@ public class CitaController {
     @PostMapping("/save-new-cita")
     public String guardarNuevaCita(@ModelAttribute Cita cita, RedirectAttributes attrs) {
         try {
-            citaService.crear(cita);
+        	Medico medico = medicoService.buscarPorId(cita.getMedico().getId());
+        	Paciente paciente = pacienteService.buscarPorId(cita.getPaciente().getId());
+        	
+        	cita.setMedico(medico);
+        	cita.setPaciente(paciente);
+        	
+            citaService.crear(cita);     
             attrs.addFlashAttribute("msgExito", "Cita registrada exitosamente.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,4 +126,38 @@ public class CitaController {
         }
         return "redirect:/list-cita";
     }
+    
+ // Cambiar estado a ATENDIDA
+    @GetMapping("/atender-cita/{id}")
+    public String atenderCita(@PathVariable Integer id, RedirectAttributes attrs) {
+        try {
+            Cita cita = citaService.buscarPorId(id);
+            cita.setEstado(Cita.Estado.ATENDIDA);
+            citaService.editar(cita);
+            attrs.addFlashAttribute("msgExito", "Cita marcada como atendida.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            attrs.addFlashAttribute("msgError", "Error al cambiar estado.");
+        }
+        return "redirect:/list-cita";
+    }
+
+    // Cambiar estado a CANCELADA
+    @GetMapping("/cancelar-cita/{id}")
+    public String cancelarCita(@PathVariable Integer id, RedirectAttributes attrs) {
+        try {
+            Cita cita = citaService.buscarPorId(id);
+            cita.setEstado(Cita.Estado.CANCELADA);
+            citaService.editar(cita);
+            attrs.addFlashAttribute("msgExito", "Cita cancelada.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            attrs.addFlashAttribute("msgError", "Error al cancelar la cita.");
+        }
+        return "redirect:/list-cita";
+    }
+    
+  
+
+
 }
