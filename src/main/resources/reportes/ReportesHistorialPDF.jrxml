@@ -1,0 +1,455 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Blank_A4_Landscape" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1933b4f7-aa17-4f79-b5b8-4d2ab62e04d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter - historialReporte"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="tablaHistorial" uuid="ec5eb84a-bef9-4fac-9b13-e639621a5862">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter - historialReporte"/>
+		<query language="SQL"><![CDATA[SELECT 
+    hc.id AS id_historial,
+    hc.fecha AS fecha_historial,
+    hc.diagnostico,
+    hc.tratamiento,
+    hc.observaciones,
+
+    -- Datos del paciente
+    p.dni AS dni_paciente,
+    CONCAT(p.nombres, ' ', p.apellidos) AS nombre_paciente,
+    p.telefono AS telefono_paciente,
+    p.correo AS correo_paciente,
+
+    -- Datos del médico
+    m.dni AS dni_medico,
+    CONCAT(m.nombres, ' ', m.apellidos) AS nombre_medico,
+    m.cmp,
+    m.telefono AS telefono_medico,
+    m.correo AS correo_medico,
+
+    -- Especialidad del médico
+    e.nombre AS especialidad_medica,
+    e.descripcion AS descripcion_especialidad,
+
+    -- Datos de la cita
+    c.fecha AS fecha_cita,
+    c.hora AS hora_cita,
+    c.estado AS estado_cita,
+    c.motivo_consulta
+
+FROM historial_clinico hc
+JOIN paciente p ON hc.paciente_id = p.id
+JOIN medico m ON hc.medico_id = m.id
+JOIN especialidad e ON m.especialidad_id = e.id
+JOIN cita c ON hc.cita_id = c.id;
+]]></query>
+		<field name="fecha_historial" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+			<property name="com.jaspersoft.studio.field.label" value="fecha_historial"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+		</field>
+		<field name="diagnostico" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="diagnostico"/>
+			<property name="com.jaspersoft.studio.field.label" value="diagnostico"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+		</field>
+		<field name="tratamiento" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="tratamiento"/>
+			<property name="com.jaspersoft.studio.field.label" value="tratamiento"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+		</field>
+		<field name="observaciones" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="observaciones"/>
+			<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+		</field>
+		<field name="dni_paciente" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="dni"/>
+			<property name="com.jaspersoft.studio.field.label" value="dni_paciente"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		</field>
+		<field name="nombre_paciente" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nombre_paciente"/>
+			<property name="com.jaspersoft.studio.field.label" value="nombre_paciente"/>
+		</field>
+		<field name="telefono_paciente" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="telefono"/>
+			<property name="com.jaspersoft.studio.field.label" value="telefono_paciente"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		</field>
+		<field name="nombre_medico" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nombre_medico"/>
+			<property name="com.jaspersoft.studio.field.label" value="nombre_medico"/>
+		</field>
+		<field name="cmp" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="cmp"/>
+			<property name="com.jaspersoft.studio.field.label" value="cmp"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="medico"/>
+		</field>
+		<field name="especialidad_medica" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+			<property name="com.jaspersoft.studio.field.label" value="especialidad_medica"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="especialidad"/>
+		</field>
+		<field name="fecha_cita" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+			<property name="com.jaspersoft.studio.field.label" value="fecha_cita"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+		</field>
+		<field name="hora_cita" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="hora"/>
+			<property name="com.jaspersoft.studio.field.label" value="hora_cita"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+		</field>
+		<field name="motivo_consulta" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="motivo_consulta"/>
+			<property name="com.jaspersoft.studio.field.label" value="motivo_consulta"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+		</field>
+	</dataset>
+	<query language="SQL"><![CDATA[SELECT 
+    hc.id AS id_historial,
+    hc.fecha AS fecha_historial,
+    hc.diagnostico,
+    hc.tratamiento,
+    hc.observaciones,
+
+    -- Datos del paciente
+    p.dni AS dni_paciente,
+    CONCAT(p.nombres, ' ', p.apellidos) AS nombre_paciente,
+    p.telefono AS telefono_paciente,
+    p.correo AS correo_paciente,
+
+    -- Datos del médico
+    m.dni AS dni_medico,
+    CONCAT(m.nombres, ' ', m.apellidos) AS nombre_medico,
+    m.cmp,
+    m.telefono AS telefono_medico,
+    m.correo AS correo_medico,
+
+    -- Especialidad del médico
+    e.nombre AS especialidad_medica,
+    e.descripcion AS descripcion_especialidad,
+
+    -- Datos de la cita
+    c.fecha AS fecha_cita,
+    c.hora AS hora_cita,
+    c.estado AS estado_cita,
+    c.motivo_consulta
+
+FROM historial_clinico hc
+JOIN paciente p ON hc.paciente_id = p.id
+JOIN medico m ON hc.medico_id = m.id
+JOIN especialidad e ON m.especialidad_id = e.id
+JOIN cita c ON hc.cita_id = c.id;
+]]></query>
+	<field name="fecha_historial" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_historial"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+	</field>
+	<field name="diagnostico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="diagnostico"/>
+		<property name="com.jaspersoft.studio.field.label" value="diagnostico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+	</field>
+	<field name="tratamiento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tratamiento"/>
+		<property name="com.jaspersoft.studio.field.label" value="tratamiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial_clinico"/>
+	</field>
+	<field name="dni_paciente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dni"/>
+		<property name="com.jaspersoft.studio.field.label" value="dni_paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="nombre_paciente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_paciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_paciente"/>
+	</field>
+	<field name="telefono_paciente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.label" value="telefono_paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="nombre_medico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_medico"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_medico"/>
+	</field>
+	<field name="cmp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cmp"/>
+		<property name="com.jaspersoft.studio.field.label" value="cmp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medico"/>
+	</field>
+	<field name="especialidad_medica" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="especialidad_medica"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="especialidad"/>
+	</field>
+	<field name="fecha_cita" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_cita"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+	</field>
+	<field name="hora_cita" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="hora"/>
+		<property name="com.jaspersoft.studio.field.label" value="hora_cita"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+	</field>
+	<field name="motivo_consulta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="motivo_consulta"/>
+		<property name="com.jaspersoft.studio.field.label" value="motivo_consulta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cita"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="74" splitType="Stretch">
+		<element kind="staticText" uuid="a5db5ab3-04f5-4af6-8e5e-e938bb4df009" x="210" y="20" width="370" height="69" fontSize="29.0" hTextAlign="Center">
+			<text><![CDATA[Historial Clinico de Paciente]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
+	<detail>
+		<band height="339" splitType="Stretch">
+			<element kind="component" uuid="0000493e-7dfd-4958-b9b3-e637aee4989f" x="0" y="-35" width="800" height="374">
+				<component kind="table">
+					<datasetRun uuid="ea89152a-59ff-4f73-9376-e19c511df312" subDataset="tablaHistorial">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<column kind="single" uuid="f6332af6-7132-4fbb-a3e7-020954a84455" width="50">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="5fa7002a-0571-4ede-a923-dec76fe229c9" x="0" y="0" width="50" height="30">
+								<text><![CDATA[fecha_historial]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="1bc62049-d3ab-4565-8171-45edd5197a9f" x="0" y="0" width="50" height="30">
+								<expression><![CDATA[$F{fecha_historial}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="debd5146-f5c5-4101-b158-98623c14e787" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="4f0530d8-f55b-47bd-bfc5-5e56bb8ec768" x="0" y="0" width="60" height="30">
+								<text><![CDATA[diagnostico]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="377e1ea9-3bea-4dfc-ba75-1d1cf89b7146" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{diagnostico}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="5f901d21-0f61-4681-a82e-b8f8f6c8a07c" width="65">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="64234c2a-bebe-4a5b-9367-7d5fffe98d40" x="0" y="0" width="65" height="30">
+								<text><![CDATA[tratamiento]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="0954b6ea-2cdb-404b-93a6-0185e17c70f0" x="0" y="0" width="65" height="30">
+								<expression><![CDATA[$F{tratamiento}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="a88c8a4d-befd-4fa3-970e-3d2e12af7ad8" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="8adb3685-7229-41a5-86fb-b7a79565333a" x="0" y="0" width="60" height="30">
+								<text><![CDATA[observaciones]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="e91f5db6-0102-494f-9064-63f25c33cfe9" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{observaciones}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="adadfe56-0eb9-4bb9-95a0-bbcef0cc23aa" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="1eb8b13d-e57e-4513-acab-c8d0389d913b" x="0" y="0" width="60" height="30">
+								<text><![CDATA[dni_paciente]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="3cc03565-d4f1-4140-852f-905dd379b89d" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{dni_paciente}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="8a92d7ca-5329-4d47-8329-10750e21bb23" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="053e5653-0f3c-4133-9a76-29f811f1c1cd" x="0" y="0" width="60" height="30">
+								<text><![CDATA[nombre_paciente]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="025792a6-880d-40bb-9f39-590945630e8e" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{nombre_paciente}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="7123808f-f63b-4a2c-a7af-77d97c89e166" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="dcf62910-36fc-4c12-a214-86a2d5951a62" x="0" y="0" width="60" height="30">
+								<text><![CDATA[telefono_paciente]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="306cb65d-b87a-477b-a3b2-0b290699cf22" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{telefono_paciente}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="5a884f91-dad2-4cc1-9caa-520676f84973" width="60">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="5372c2a6-bb23-4df6-bfbb-9758350ac105" x="0" y="0" width="60" height="30">
+								<text><![CDATA[nombre_medico]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="b9ccd28d-8118-4e06-8b35-b31cabba6195" x="0" y="0" width="60" height="30">
+								<expression><![CDATA[$F{nombre_medico}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="4945693c-d757-46d2-adb7-bff7685bf36f" width="50">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="0413bff9-1e7e-4fdf-b7c7-4129bc3723ca" x="0" y="0" width="50" height="30">
+								<text><![CDATA[cmp]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="d2f322d8-21de-4975-bc97-f879cc47914a" x="0" y="0" width="50" height="30">
+								<expression><![CDATA[$F{cmp}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="3eb4ce4b-cedc-41f1-8e22-75af1cc33af0" width="90">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="a98ddea9-97b1-49be-83eb-6f24ea7c0d71" x="0" y="0" width="90" height="30">
+								<text><![CDATA[especialidad_medica]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="52425dc8-2049-426b-801c-79b35538cd92" x="0" y="0" width="90" height="30">
+								<expression><![CDATA[$F{especialidad_medica}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="4b125fbc-8cba-4a28-a7c2-2c8c26812dfb" width="80">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="e22b3244-7480-4ef6-a0b5-761f3dae015d" x="0" y="0" width="80" height="30">
+								<text><![CDATA[fecha_cita]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="56e0c3d9-c113-4e15-935d-46201b3d48bb" x="0" y="0" width="80" height="30">
+								<expression><![CDATA[$F{fecha_cita}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="38782f5d-8826-4814-9718-4a95c6375d9e" width="40">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="a61f1653-ac14-47a7-b732-8458ce1e481b" x="0" y="0" width="40" height="30">
+								<text><![CDATA[hora_cita]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="dd17f285-cb8f-4488-8c12-2662b1363c9f" x="0" y="0" width="40" height="30">
+								<expression><![CDATA[$F{hora_cita}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="34dcedbf-4578-4987-8c90-c85c1e7e8f1b" width="65">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="d060dca2-c375-4476-8f73-65d3402a7cd6" x="0" y="0" width="65" height="30">
+								<text><![CDATA[motivo_consulta]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="60eb587a-9885-42e4-87a2-fd8c9a9d2199" x="0" y="0" width="65" height="30">
+								<expression><![CDATA[$F{motivo_consulta}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

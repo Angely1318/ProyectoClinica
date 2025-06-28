@@ -49,7 +49,7 @@ public class PacienteController {
     
  // Página para editar paciente
     @GetMapping("/edit-paciente/{id}")
-    public String editarPaciente(@PathVariable Integer id, Model model) {
+    public String editarPaciente(@PathVariable("id") Integer id, Model model) {
         try {
             Paciente paciente = pacienteService.buscarPorId(id);
             model.addAttribute("paciente", paciente);
@@ -64,7 +64,7 @@ public class PacienteController {
 
     // Página para visualizar paciente (modo solo lectura)
     @GetMapping("/view-paciente/{id}")
-    public String verPaciente(@PathVariable Integer id, Model model) {
+    public String verPaciente(@PathVariable("id") Integer id, Model model) {
         try {
             Paciente paciente = pacienteService.buscarPorId(id);
             model.addAttribute("paciente", paciente);
@@ -79,7 +79,7 @@ public class PacienteController {
 
     // Eliminar paciente
     @GetMapping("/remove-paciente/{id}")
-    public String eliminarPaciente(@PathVariable Integer id, RedirectAttributes redirectAttrs) {
+    public String eliminarPaciente(@PathVariable("id") Integer id, RedirectAttributes redirectAttrs) {
         try {
             pacienteService.eliminar(id);
             redirectAttrs.addFlashAttribute("msgExito", "Paciente eliminado correctamente.");

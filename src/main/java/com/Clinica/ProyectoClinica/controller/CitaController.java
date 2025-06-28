@@ -52,7 +52,7 @@ public class CitaController {
 
     // Editar cita
     @GetMapping("/edit-cita/{id}")
-    public String editarCita(@PathVariable Integer id, Model model) {
+    public String editarCita(@PathVariable("id") Integer id, Model model) {
         try {
         	Cita cita = citaService.buscarPorId(id);
             model.addAttribute("cita", cita);
@@ -69,7 +69,7 @@ public class CitaController {
 
     // Ver cita
     @GetMapping("/view-cita/{id}")
-    public String verCita(@PathVariable Integer id, Model model) {
+    public String verCita(@PathVariable("id") Integer id, Model model) {
         try {
         	Cita cita = citaService.buscarPorId(id);
             model.addAttribute("cita", cita);
@@ -84,7 +84,7 @@ public class CitaController {
 
     // Eliminar cita
     @GetMapping("/remove-cita/{id}")
-    public String eliminarCita(@PathVariable Integer id, RedirectAttributes attrs) {
+    public String eliminarCita(@PathVariable("id") Integer id, RedirectAttributes attrs) {
         try {
             citaService.eliminar(id);
             attrs.addFlashAttribute("msgExito", "Cita eliminada correctamente.");
@@ -129,7 +129,7 @@ public class CitaController {
     
  // Cambiar estado a ATENDIDA
     @GetMapping("/atender-cita/{id}")
-    public String atenderCita(@PathVariable Integer id, RedirectAttributes attrs) {
+    public String atenderCita(@PathVariable("id") Integer id, RedirectAttributes attrs) {
         try {
             Cita cita = citaService.buscarPorId(id);
             cita.setEstado(Cita.Estado.ATENDIDA);
@@ -144,7 +144,7 @@ public class CitaController {
 
     // Cambiar estado a CANCELADA
     @GetMapping("/cancelar-cita/{id}")
-    public String cancelarCita(@PathVariable Integer id, RedirectAttributes attrs) {
+    public String cancelarCita(@PathVariable("id") Integer id, RedirectAttributes attrs) {
         try {
             Cita cita = citaService.buscarPorId(id);
             cita.setEstado(Cita.Estado.CANCELADA);

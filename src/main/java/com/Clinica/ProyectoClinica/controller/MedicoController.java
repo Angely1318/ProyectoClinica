@@ -43,7 +43,7 @@ public class MedicoController {
     }
 
     @GetMapping("/edit-medico/{id}")
-    public String editar(@PathVariable Integer id, Model model) {
+    public String editar(@PathVariable("id") Integer id, Model model) {
         try {
         	Medico medico = medicoService.buscarPorId(id);
             model.addAttribute("medico", medico);
@@ -58,7 +58,7 @@ public class MedicoController {
     }
 
     @GetMapping("/view-medico/{id}")
-    public String ver(@PathVariable Integer id, Model model) {
+    public String ver(@PathVariable("id") Integer id, Model model) {
         try {
         	Medico medico = medicoService.buscarPorId(id);
             model.addAttribute("medico", medico);
@@ -72,7 +72,7 @@ public class MedicoController {
     }
 
     @GetMapping("/remove-medico/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes attrs) {
+    public String eliminar(@PathVariable("id") Integer id, RedirectAttributes attrs) {
         try {
             medicoService.eliminar(id);
             attrs.addFlashAttribute("msgExito", "Médico eliminado correctamente.");

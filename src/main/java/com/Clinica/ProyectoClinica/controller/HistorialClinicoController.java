@@ -25,7 +25,7 @@ public class HistorialClinicoController {
 
     // Formulario de nuevo historial desde una cita ATENDIDA
     @GetMapping("/registrar-historial/{idCita}")
-    public String registrarHistorial(@PathVariable Integer idCita, Model model, RedirectAttributes attrs) {
+    public String registrarHistorial(@PathVariable("idCita") Integer idCita, Model model, RedirectAttributes attrs) {
         try {
             Cita cita = citaService.buscarPorId(idCita);
 
@@ -81,7 +81,7 @@ public class HistorialClinicoController {
 
     // Editar historial
     @GetMapping("/edit-historial/{id}")
-    public String editar(@PathVariable Integer id, Model model) {
+    public String editar(@PathVariable("id") Integer id, Model model) {
         try {
             HistorialClinico historial = historialService.buscarPorId(id);
             model.addAttribute("historial", historial);
@@ -96,7 +96,7 @@ public class HistorialClinicoController {
 
     // Ver historial
     @GetMapping("/view-historial/{id}")
-    public String ver(@PathVariable Integer id, Model model) {
+    public String ver(@PathVariable("id") Integer id, Model model) {
         try {
             HistorialClinico historial = historialService.buscarPorId(id);
             model.addAttribute("historial", historial);
@@ -111,7 +111,7 @@ public class HistorialClinicoController {
 
     // Eliminar historial
     @GetMapping("/remove-historial/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes attrs) {
+    public String eliminar(@PathVariable("id") Integer id, RedirectAttributes attrs) {
         try {
             historialService.eliminar(id);
             attrs.addFlashAttribute("msgExito", "Historial eliminado correctamente.");
