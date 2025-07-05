@@ -33,4 +33,15 @@ public class ReporteController {
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)
 				.header(HttpHeaders.CONTENT_DISPOSITION, cd.toString()).body(data);
 	}
+	@GetMapping(value = "/citas-anio", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> generarGraficoCitas() throws Exception {
+	    byte[] data = reporteService.generarGraficoCitasAnioPDF();
+	    ContentDisposition cd = ContentDisposition.inline().filename("grafico_citas_anio.pdf").build();
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.APPLICATION_PDF)
+	            .header(HttpHeaders.CONTENT_DISPOSITION, cd.toString())
+	            .body(data);
+	}
+
+
 }

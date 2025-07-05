@@ -7,7 +7,6 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -44,4 +43,18 @@ public class ReporteService {
 			DataSourceUtils.releaseConnection(conn, dataSource);
 		}
 	}
+
+	public byte[] generarGraficoCitasAnioPDF() throws Exception {
+		InputStream jrxml = new ClassPathResource("reportes/citasPorAnio.jrxml").getInputStream();
+		JasperReport jasperReport = JasperCompileManager.compileReport(jrxml);
+		Connection conn = DataSourceUtils.getConnection(dataSource);
+		try {
+			Map<String, Object> params = new HashMap<>(); // Si quieres parámetros, agrégalos aquí
+			JasperPrint print = JasperFillManager.fillReport(jasperReport, params, conn);
+			return JasperExportManager.exportReportToPdf(print);
+		} finally {
+			DataSourceUtils.releaseConnection(conn, dataSource);
+		}
+	}
+
 }

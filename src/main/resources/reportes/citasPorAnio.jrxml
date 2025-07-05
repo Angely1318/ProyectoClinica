@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="CitasPorAnio"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20"
+              uuid="e25ecbe4-4f68-4518-b8ef-7f4ef10c95e8">
+
+    <!-- 1. Estilos (MOVIDOS AQUÍ) -->
+    <style name="TableHeader" forecolor="#FFFFFF" backcolor="#4F81BD" mode="Opaque" isBold="true"/>
+    <style name="TableDetail" mode="Opaque"/>
+
+    <!-- 2. Consulta (MOVIDA AQUÍ para seguir el estándar) -->
+    <queryString>
+        <![CDATA[
+        SELECT
+            YEAR(fecha) AS anio,
+            COUNT(*) AS total_citas
+        FROM
+            cita
+        GROUP BY
+            YEAR(fecha)
+        ORDER BY
+            anio ASC
+        ]]>
+    </queryString>
+
+    <!-- 3. Campos -->
+    <field name="anio" class="java.lang.Integer"/>
+    <field name="total_citas" class="java.lang.Long"/>
+
+    <!-- 4. Bandas del reporte -->
+    <!-- título -->
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30" uuid="4a57c3cb-5f1a-4e5c-b030-6b55f6d45839"/>
+                <textElement textAlignment="Center">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Citas por Año]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <!-- cabecera de columnas -->
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement style="TableHeader" x="0" y="0" width="200" height="20" uuid="ae7a77e4-9b2a-4fc5-b6b7-4bb3392028e4"/>
+                <textElement textAlignment="Center"/>
+                <text><![CDATA[Año]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="200" y="0" width="355" height="20" uuid="eb2076ff-4d4d-4e18-b7c6-71ddaa331dea"/>
+                <textElement textAlignment="Center"/>
+                <text><![CDATA[Total de Citas]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- detalle -->
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="200" height="20" uuid="89a77ef1-9c88-45d1-99a5-ff5c1561e30e"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="200" y="0" width="355" height="20" uuid="84f1389b-894d-4034-b57a-f6cc8b78f412"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{total_citas}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- pie de página -->
+    <pageFooter>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="20" uuid="9a81d1d4-8af0-4e15-b3e4-14d9893d3760"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Página $V{PAGE_NUMBER}]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+
+</jasperReport>

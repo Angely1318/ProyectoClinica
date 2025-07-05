@@ -1,96 +1,86 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Panel Administrativo</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
-<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	background-color: #f8f9fa;
-}
-
-.main-wrapper {
-	min-height: 100vh;
-	display: flex;
-}
-
-.sidebar {
-	width: 250px;
-	background-color: #003366;
-	color: white;
-	display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
-}
-
-.sidebar a {
-	color: white;
-	text-decoration: none;
-	padding: 15px;
-}
-
-.sidebar a:hover {
-	background-color: #005599;
-}
-
-.content-area {
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-.main-content {
-	flex-grow: 1;
-	padding: 2rem 3rem;
-	background-color: #f8f9fa;
-	overflow-y: auto;
-}
-
-.content-box {
-	background-color: white;
-	border-radius: 8px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	padding: 2rem;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Panel Administrativo</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #f8f9fa;
+    }
+    .main-wrapper {
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #003366;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 15px;
+    }
+    .sidebar a:hover {
+      background-color: #005599;
+    }
+    .content-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 2rem 3rem;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+    }
+    .content-box {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+  </style>
 </head>
 <body>
-	<div class="main-wrapper">
-		<!-- Menú lateral -->
-		<div class="sidebar">
-			<a th:href="@{/}" class="text-center">
-				<h4 class="py-3">Clínica VidaSalud</h4>
-			</a> <a th:href="@{/new-paciente}"><i
-				class="bi bi-person-circle me-2"></i>Pacientes</a> <a
-				th:href="@{/new-medico}"><i class="bi bi-person-video3 me-2"></i>Médicos</a>
-			<a th:href="@{/new-cita}"><i class="bi bi-calendar-check me-2"></i>Agendar
-				Citas</a> <a th:href="@{/list-historial}"><i
-				class="bi bi-flask me-2"></i>Historial Clínico</a> <a
-				th:href="@{/reportes/historial}"><i class="bi bi-gear me-2"></i>Reportes</a>
-		</div>
+  <div class="main-wrapper">
+    <!-- Menú lateral -->
+    <div class="sidebar">
+      <a th:href="@{/}" class="text-center">
+        <h4 class="py-3">Clínica VidaSalud</h4>
+      </a>
+      <a th:href="@{/new-paciente}"><i class="bi bi-person-circle me-2"></i>Pacientes</a>
+      <a th:href="@{/new-medico}"><i class="bi bi-person-video3 me-2"></i>Médicos</a>
+      <a th:href="@{/new-cita}"><i class="bi bi-calendar-check me-2"></i>Agendar Citas</a>
+      <a th:href="@{/list-historial}"><i class="bi bi-flask me-2"></i>Historial Clínico</a>
+      <a th:href="@{/reporte/citas-anio}"><i class="bi bi-gear me-2"></i>Reportes</a>
 
-		<!-- Área de contenido -->
-		<div class="content-area">
-			<nav class="navbar navbar-dark bg-primary px-4">
-				<span class="navbar-brand">Panel Administrativo</span>
-			</nav>
+    </div>
 
-			<div class="main-content">
-				<!-- Aquí Thymeleaf inserta el fragmento cuyo nombre viene en el atributo "contenido" del modelo -->
-				<div class="content-box" th:replace="__${contenido}__"></div>
+    <!-- Área de contenido -->
+    <div class="content-area">
+      <nav class="navbar navbar-dark bg-primary px-4">
+        <span class="navbar-brand">Panel Administrativo</span>
+        <a th:href="@{/login}" class="btn btn-light ms-auto">Cerrar Sesión</a>
+      </nav>
 
-			</div>
-		</div>
-	</div>
-	</div>
+      <div class="main-content">
+        <!-- Aquí Thymeleaf inserta el fragmento -->
+        <div class="content-box" th:replace="__${contenido}__"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-
-

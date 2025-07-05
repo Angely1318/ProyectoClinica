@@ -1,11 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+.card {
+	max-width: 400px;
+	margin: 20px auto;
+	border: 1px solid #c8c8c8;
+	border-radius: 8px;
+	box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	background-color: #f8f9fa;
+	font-family: Arial, sans-serif;
+}
+
+.card h2 {
+	text-align: center;
+	color: #007bff;
+}
+
+.card p {
+	font-size: 15px;
+	margin: 8px 0;
+}
+
+.label {
+	font-weight: bold;
+	color: #333;
+}
+</style>
+</head>
 <body>
 	<div th:fragment="contenido">
-		<h2>Bienvenido al panel de administración</h2>
-		<p>Seleccione una opción del menú para comenzar.</p>
+		<div class="card">
+			<h2>Bienvenido al panel de administración</h2>
 
-		
+			<div th:if="${session.registrarUsuarioLogueado != null}">
+				<p>
+					<strong>Nombre:</strong> <span
+						th:text="${session.registrarUsuarioLogueado.nombres}"></span>
+				</p>
+				<p>
+					<strong>Apellido:</strong> <span
+						th:text="${session.registrarUsuarioLogueado.apellidos}"></span>
+				</p>
+				<p>
+					<strong>Correo:</strong> <span
+						th:text="${session.registrarUsuarioLogueado.correo}"></span>
+				</p>
+				<p>
+					<strong>Contraseña:</strong> ********
+				</p>
+			</div>
+
+
+			<p>Seleccione una opción del menú para comenzar.</p>
+		</div>
 	</div>
 </body>
 </html>
