@@ -1,0 +1,66 @@
+<div th:fragment="contenido">
+  <h4>Formulario Médico</h4>
+
+  <form th:action="${modo == 'editar'} ? @{/save-edit-medico} : @{/save-new-medico}"
+        th:object="${medico}" method="post" class="row g-3">
+        
+    <input type="hidden" th:field="*{id}">
+
+    <div class="col-md-6">
+      <label class="form-label">DNI</label>
+      <input type="text" th:field="*{dni}" class="form-control" maxlength="10" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Nombres</label>
+      <input type="text" th:field="*{nombres}" class="form-control" maxlength="100" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Apellidos</label>
+      <input type="text" th:field="*{apellidos}" class="form-control" maxlength="100" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">CMP</label>
+      <input type="text" th:field="*{cmp}" class="form-control" maxlength="20" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Teléfono</label>
+      <input type="text" th:field="*{telefono}" class="form-control" maxlength="15">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Correo</label>
+      <input type="email" th:field="*{correo}" class="form-control" maxlength="100">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Género</label>
+      <select th:field="*{genero}" class="form-select" required>
+        <option th:value="MASCULINO">Masculino</option>
+        <option th:value="FEMENINO">Femenino</option>
+        <option th:value="OTRO">Otro</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Horario de Atención</label>
+      <input type="text" th:field="*{horarioAtencion}" class="form-control" maxlength="100">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Especialidad</label>
+      <select th:field="*{especialidad}" class="form-select" required>
+        <option th:each="esp : ${listaEspecialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Guardar Médico</button>
+      <a th:href="@{/list-medico}" class="btn btn-secondary">Ver Lista</a>
+    </div>
+
+  </form>
+</div>

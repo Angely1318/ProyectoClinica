@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="cadapaciente" language="java" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <parameter name="PACIENTE_ID" class="java.lang.Long"/>
+
+    <queryString language="sql"><![CDATA[
+        SELECT
+            p.nombres,
+            p.apellidos,
+            p.fecha_nacimiento,
+            p.correo,
+            p.genero,
+            p.dni,
+            p.direccion,
+            p.pais,
+            hc.fecha,
+            hc.diagnostico,
+            hc.tratamiento,
+            hc.observaciones
+        FROM paciente p
+        LEFT JOIN historial_clinico hc ON p.id = hc.paciente_id
+        WHERE p.id = $P{PACIENTE_ID}
+        ORDER BY hc.fecha DESC
+    ]]></queryString>
+
+    <field name="nombres" class="java.lang.String"/>
+    <field name="apellidos" class="java.lang.String"/>
+    <field name="fecha_nacimiento" class="java.sql.Date"/>
+    <field name="correo" class="java.lang.String"/>
+    <field name="genero" class="java.lang.String"/>
+    <field name="dni" class="java.lang.String"/>
+    <field name="direccion" class="java.lang.String"/>
+    <field name="pais" class="java.lang.String"/>
+    <field name="fecha" class="java.sql.Date"/>
+    <field name="diagnostico" class="java.lang.String"/>
+    <field name="tratamiento" class="java.lang.String"/>
+    <field name="observaciones" class="java.lang.String"/>
+
+    <title>
+        <band height="60">
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="60" backcolor="#3C8DBC" mode="Opaque"/>
+            </rectangle>
+            <staticText>
+                <reportElement x="0" y="15" width="555" height="30" forecolor="#FFFFFF"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[HISTORIAL CLÍNICO DEL PACIENTE]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <detail>
+        <band height="300">
+            <!-- datos del paciente -->
+            <frame>
+                <reportElement x="0" y="0" width="555" height="150" backcolor="#F5F5F5" mode="Opaque" />
+                <staticText>
+                    <reportElement x="5" y="5" width="545" height="20" forecolor="#3C8DBC"/>
+                    <textElement>
+                        <font size="14" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Datos del Paciente]]></text>
+                </staticText>
+                <textField>
+                    <reportElement x="5" y="30" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Nombre: " + $F{nombres} + " " + $F{apellidos}]]></textFieldExpression>
+                </textField>
+                <textField pattern="dd/MM/yyyy">
+                    <reportElement x="5" y="60" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Fecha de Nacimiento: " + $F{fecha_nacimiento}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="5" y="90" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Correo: " + $F{correo}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="5" y="120" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Género: " + $F{genero} + "   DNI: " + $F{dni}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="5" y="150" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Dirección: " + $F{direccion} + ", " + $F{pais}]]></textFieldExpression>
+                </textField>
+            </frame>
+            
+            <!-- linea divisoria -->
+            <line>
+                <reportElement x="0" y="175" width="555" height="1" forecolor="#AAAAAA"/>
+            </line>
+            
+            <!-- historial -->
+            <frame>
+                <reportElement x="0" y="180" width="555" height="120" backcolor="#FFFFFF" mode="Transparent" />
+                <staticText>
+                    <reportElement x="5" y="0" width="545" height="20" forecolor="#3C8DBC"/>
+                    <textElement>
+                        <font size="14" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Detalles de la Historia Clínica]]></text>
+                </staticText>
+                <textField pattern="dd/MM/yyyy">
+                    <reportElement x="5" y="30" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Fecha: " + $F{fecha}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true">
+                    <reportElement x="5" y="60" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Diagnóstico: " + $F{diagnostico}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true">
+                    <reportElement x="5" y="90" width="545" height="25"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Tratamiento: " + $F{tratamiento}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true">
+                    <reportElement x="5" y="120" width="545" height="40"/>
+                    <textElement>
+                        <font size="12"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Observaciones: " + $F{observaciones}]]></textFieldExpression>
+                </textField>
+            </frame>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="20">
+            <line>
+                <reportElement x="0" y="0" width="555" height="1" forecolor="#AAAAAA"/>
+            </line>
+            <textField>
+                <reportElement x="450" y="5" width="100" height="15"/>
+                <textElement textAlignment="Right">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+</jasperReport>

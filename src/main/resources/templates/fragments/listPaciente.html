@@ -1,0 +1,57 @@
+<!-- templates/listaPacientes.html -->
+<div th:fragment="contenido">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Pacientes</h4>
+
+    <!-- Buscador -->
+    <form th:action="@{/list-paciente}" method="get" class="d-flex">
+	  <input type="text" name="filtro" th:value="${filtro}" class="form-control form-control-sm me-2" placeholder="Buscar por DNI o nombre">
+      <button type="submit" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <a th:href="@{/new-paciente}" class="btn btn-primary mb-3">Registrar Nuevo Paciente</a>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>ID</th>
+          <th>DNI</th>
+          <th>Nombre Completo</th>
+          <th>Género</th>
+          <th>Fecha Nac.</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Dirección</th>
+          <th>País</th>
+          <th>Registro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="pac : ${listaPacientes}">
+          <td th:text="${pac.id}"></td>
+          <td th:text="${pac.dni}"></td>
+          <td th:text="${pac.nombres + ' ' + pac.apellidos}"></td>
+          <td th:text="${pac.genero}"></td>
+          <td th:text="${#temporals.format(pac.fechaNacimiento, 'dd/MM/yyyy')}"></td>
+          <td th:text="${pac.telefono}"></td>
+          <td th:text="${pac.correo}"></td>
+          <td th:text="${pac.direccion}"></td>
+          <td th:text="${pac.pais}"></td>
+          <td th:text="${#temporals.format(pac.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
+          <td class="text-center">
+            <a th:href="@{'/edit-paciente/' + ${pac.id}}" class="btn btn-sm btn-warning">Editar</a>
+            <a th:href="@{'/view-paciente/' + ${pac.id}}" class="btn btn-sm btn-info text-white">Ver</a>
+            <a th:href="@{'/remove-paciente/' + ${pac.id}}" class="btn btn-sm btn-danger"
+               onclick="return confirm('¿Estás seguro de eliminar este paciente?')">Eliminar</a>
+             <a th:href="@{'/reporte/paciente/' + ${pac.id}}" class="btn btn-sm btn-secondary" target="_blank">HistorialPDF</a>  
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div th:fragment="contenido">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Médicos</h4>
+
+    <form th:action="@{/list-medico}" method="get" class="d-flex">
+      <input type="text" name="filtro" th:value="${filtro}" class="form-control form-control-sm me-2" placeholder="Buscar por DNI o nombre">
+      <button type="submit" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <a th:href="@{/new-medico}" class="btn btn-primary mb-3">Registrar Nuevo Médico</a>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>ID</th>
+          <th>DNI</th>
+          <th>Nombre Completo</th>
+          <th>CMP</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Género</th>
+          <th>Horario</th>
+          <th>Especialidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="med : ${listaMedicos}">
+          <td th:text="${med.id}"></td>
+          <td th:text="${med.dni}"></td>
+          <td th:text="${med.nombres + ' ' + med.apellidos}"></td>
+          <td th:text="${med.cmp}"></td>
+          <td th:text="${med.telefono}"></td>
+          <td th:text="${med.correo}"></td>
+          <td th:text="${med.genero}"></td>
+          <td th:text="${med.horarioAtencion}"></td>
+          <td th:text="${med.especialidad.nombre}"></td>
+          <td class="text-center">
+            <a th:href="@{'/edit-medico/' + ${med.id}}" class="btn btn-sm btn-warning">Editar</a>
+            <a th:href="@{'/view-medico/' + ${med.id}}" class="btn btn-sm btn-info text-white">Ver</a>
+            <a th:href="@{'/remove-medico/' + ${med.id}}" class="btn btn-sm btn-danger"
+               onclick="return confirm('¿Estás seguro de eliminar este médico?')">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

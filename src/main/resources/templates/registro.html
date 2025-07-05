@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Registro | Clínica Salud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+	margin: 0;
+}
+
+.register-container {
+	width: 100%;
+	max-width: 400px;
+	margin: 50px auto;
+	background: #fff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #1976d2;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+	width: 100%;
+	padding: 12px;
+	margin: 8px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+button {
+	width: 100%;
+	padding: 12px;
+	background-color: #1976d2;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #1565c0;
+}
+
+.link {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+	color: #1976d2;
+}
+
+.error {
+	color: red;
+	text-align: center;
+	margin-top: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="register-container">
+		<h2>Registro de Paciente</h2>
+		<form th:action="@{/registro}" method="post">
+			<input type="text" name="nombre" placeholder="Nombres" required>
+			<input type="text" name="apellido" placeholder="Apellidos" required>
+			<input type="text" name="username" placeholder="Correo electrónico"
+				required> <input type="password" name="password"
+				placeholder="Contraseña" required>
+			<button type="submit">Crear Cuenta</button>
+		</form>
+		<a th:href="@{/login}" class="link">¿Ya tienes cuenta? Inicia
+			sesión</a>
+		<div th:if="${mensaje != null}" class="error" th:text="${mensaje}"></div>
+	</div>
+</body>
+</html>

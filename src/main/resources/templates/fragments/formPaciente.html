@@ -1,0 +1,65 @@
+<!-- Fragmento reutilizable -->
+<div th:fragment="contenido">
+  <h4>Formulario Paciente</h4>
+  
+<form th:action="${modo == 'editar'} ? @{/save-edit-paciente} : @{/save-new-paciente}"
+      th:object="${paciente}" method="post" class="row g-3">
+      
+    <input type="hidden" th:field="*{id}">
+
+    <div class="col-md-6">
+      <label for="dni" class="form-label">DNI</label>
+      <input type="text" th:field="*{dni}" class="form-control" maxlength="10" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="nombres" class="form-label">Nombres</label>
+      <input type="text" th:field="*{nombres}" class="form-control" maxlength="100" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="apellidos" class="form-label">Apellidos</label>
+      <input type="text" th:field="*{apellidos}" class="form-control" maxlength="100" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="genero" class="form-label">Género</label>
+      <select th:field="*{genero}" class="form-select" required>
+        <option th:value="MASCULINO">Masculino</option>
+        <option th:value="FEMENINO">Femenino</option>
+        <option th:value="OTRO">Otro</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+      <input type="date" th:field="*{fechaNacimiento}" class="form-control">
+    </div>
+
+    <div class="col-md-6">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input type="text" th:field="*{telefono}" class="form-control" maxlength="15">
+    </div>
+
+    <div class="col-md-6">
+      <label for="correo" class="form-label">Correo</label>
+      <input type="email" th:field="*{correo}" class="form-control" maxlength="100">
+    </div>
+
+    <div class="col-md-6">
+      <label for="direccion" class="form-label">Dirección</label>
+      <input type="text" th:field="*{direccion}" class="form-control" maxlength="200">
+    </div>
+
+    <div class="col-md-6">
+      <label for="pais" class="form-label">País</label>
+      <input type="text" th:field="*{pais}" class="form-control" maxlength="100">
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+      <a th:href="@{/list-paciente}" class="btn btn-secondary">Ver Lista</a>
+    </div>
+
+  </form>
+</div>

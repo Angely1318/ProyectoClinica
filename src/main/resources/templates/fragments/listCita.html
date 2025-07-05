@@ -1,0 +1,64 @@
+<div th:fragment="contenido">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Citas</h4>
+
+    <form th:action="@{/list-cita}" method="get" class="d-flex">
+      <input type="text" name="filtro" th:value="${filtro}" class="form-control form-control-sm me-2" placeholder="Buscar por paciente o médico">
+      <button type="submit" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <a th:href="@{/new-cita}" class="btn btn-primary mb-3">Registrar Nueva Cita</a>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Estado</th>
+          <th>Motivo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="cita : ${listaCitas}">
+          <td th:text="${cita.id}"></td>
+          <td th:text="${cita.paciente.nombres + ' ' + cita.paciente.apellidos}"></td>
+          <td th:text="${cita.medico.nombres + ' ' + cita.medico.apellidos}"></td>
+          <td th:text="${#temporals.format(cita.fecha, 'dd/MM/yyyy')}"></td>
+          <td th:text="${cita.hora}"></td>
+          <td th:text="${cita.estado}"></td>
+          <td th:text="${cita.motivoConsulta}"></td>
+
+			<td class="text-center">
+  <a th:href="@{'/view-cita/' + ${cita.id}}" class="btn btn-sm btn-info">Ver</a>
+  <a th:href="@{'/edit-cita/' + ${cita.id}}" class="btn btn-sm btn-warning">Editar</a>
+  <a th:href="@{'/remove-cita/' + ${cita.id}}" class="btn btn-sm btn-danger"
+     onclick="return confirm('¿Estás seguro de eliminar esta cita?')">Eliminar</a>
+
+  <!-- Botones solo si estado es SOLICITADA -->
+  <a th:if="${cita.estado.name() == 'SOLICITADA'}"
+     th:href="@{/atender-cita/{id}(id=${cita.id})}"
+     class="btn btn-sm btn-success mt-1">Atender</a>
+
+  <a th:if="${cita.estado.name() == 'SOLICITADA'}"
+     th:href="@{/cancelar-cita/{id}(id=${cita.id})}"
+     class="btn btn-sm btn-secondary mt-1">Cancelar</a>
+
+  <!-- Botón para registrar historial si está ATENDIDA y no tiene historial aún -->
+  <a th:if="${cita.estado.name() == 'ATENDIDA' and cita.historial == null}"
+     th:href="@{/registrar-historial/{idCita}(idCita=${cita.id})}"
+     class="btn btn-sm btn-dark mt-1">Registrar Historial</a>
+</td>
+			          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

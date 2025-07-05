@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="HClinico"
+              language="java"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20">
+              
+    <!-- Estilos -->
+    <style name="TableHeader" mode="Opaque" backcolor="#4F81BD" forecolor="#FFFFFF" fontSize="11" isBold="true"/>
+    <style name="TableDetail" mode="Opaque" backcolor="#FFFFFF" fontSize="9"/>
+
+    <queryString>
+        <![CDATA[
+        SELECT
+            hc.id AS id_historial,
+            hc.fecha AS fecha_historial,
+            hc.diagnostico,
+            hc.tratamiento,
+            hc.observaciones,
+            CONCAT(p.nombres,' ',p.apellidos) AS nombre_paciente,
+            CONCAT(m.nombres,' ',m.apellidos) AS nombre_medico
+        FROM historial_clinico hc
+        JOIN paciente p ON hc.paciente_id = p.id
+        JOIN medico m ON hc.medico_id = m.id
+        ORDER BY hc.fecha DESC
+        ]]>
+    </queryString>
+
+    <field name="id_historial" class="java.lang.Long"/>
+    <field name="fecha_historial" class="java.sql.Date"/>
+    <field name="diagnostico" class="java.lang.String"/>
+    <field name="tratamiento" class="java.lang.String"/>
+    <field name="observaciones" class="java.lang.String"/>
+    <field name="nombre_paciente" class="java.lang.String"/>
+    <field name="nombre_medico" class="java.lang.String"/>
+
+    <!-- Título -->
+    <title>
+        <band height="60">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30" forecolor="#3C8DBC"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Historial Clínico de Pacientes]]></text>
+            </staticText>
+            <line>
+                <reportElement x="0" y="50" width="555" height="1" forecolor="#3C8DBC"/>
+            </line>
+        </band>
+    </title>
+
+    <!-- Encabezado de columnas -->
+    <columnHeader>
+        <band height="35">
+            <staticText>
+                <reportElement style="TableHeader" x="0" y="0" width="30" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="30" y="0" width="120" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Paciente]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="150" y="0" width="120" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Médico]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="270" y="0" width="65" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Fecha]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="335" y="0" width="90" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Diagnóstico]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="425" y="0" width="80" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Tratamiento]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="TableHeader" x="505" y="0" width="50" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Obs.]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- Detalle -->
+<detail>
+    <band height="25">
+        <textField>
+            <reportElement style="TableDetail" x="0" y="0" width="30" height="25"/>
+            <textElement textAlignment="Center" verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{id_historial}]]></textFieldExpression>
+        </textField>
+        <textField>
+            <reportElement style="TableDetail" x="30" y="0" width="120" height="25"/>
+            <textElement verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{nombre_paciente}]]></textFieldExpression>
+        </textField>
+        <textField>
+            <reportElement style="TableDetail" x="150" y="0" width="120" height="25"/>
+            <textElement verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{nombre_medico}]]></textFieldExpression>
+        </textField>
+        <textField pattern="dd/MM/yyyy">
+            <reportElement style="TableDetail" x="270" y="0" width="65" height="25"/>
+            <textElement textAlignment="Center" verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{fecha_historial}]]></textFieldExpression>
+        </textField>
+        <textField>
+            <reportElement style="TableDetail" x="335" y="0" width="90" height="25"/>
+            <textElement verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
+        </textField>
+        <textField>
+            <reportElement style="TableDetail" x="425" y="0" width="80" height="25"/>
+            <textElement verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{tratamiento}]]></textFieldExpression>
+        </textField>
+        <textField isStretchWithOverflow="true">
+            <reportElement style="TableDetail" x="505" y="0" width="50" height="25"/>
+            <textElement verticalAlignment="Middle"/>
+            <textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+        </textField>
+        <!-- línea separadora -->
+        <line>
+            <reportElement x="0" y="24" width="555" height="1" forecolor="#CCCCCC"/>
+        </line>
+    </band>
+</detail>
+
+    <!-- Pie de página -->
+    <pageFooter>
+        <band height="20">
+            <textField>
+                <reportElement x="455" y="0" width="100" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+</jasperReport>
